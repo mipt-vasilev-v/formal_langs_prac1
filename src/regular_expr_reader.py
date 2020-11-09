@@ -9,6 +9,7 @@ class RegularExpressionReader(object):
                 raise AttributeError("Regular expression has improper symbols")
         if expr[-1] in c.ALPHABET:
             raise AttributeError("Incorrect expression")
+        
 
     def FindMinLenEqualToRemainderByMod(self, mod, remainder):
         stack = self.StackForExpr()
@@ -33,11 +34,14 @@ class RegularExpressionReader(object):
                     expr = stack.pop()
                     repeated_expr = self.__ExprRepeated(expr)
                     stack.push(repeated_expr)
-        answer_storage = stack.top()
+        answer_storage = stack.pop()
+        if not stack.empty():
+            raise AttributeError("Incorrect expression")
         if answer_storage[remainder] >= 0:
             res = answer_storage[remainder] * mod + remainder
         else:
             res = None
+        
         return res 
 
 
@@ -88,6 +92,7 @@ class RegularExpressionReader(object):
             res = temp
         return res
 
+
     class StackForExpr(object):
         
         def __init__(self):
@@ -101,6 +106,10 @@ class RegularExpressionReader(object):
                 self.stack.pop()
             return res
         
+
+        def empty(self):
+            return len(self.stack) == 0
+
 
         def push(self, obj):
             self.stack.append(obj)

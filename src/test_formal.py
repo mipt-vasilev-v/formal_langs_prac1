@@ -16,6 +16,7 @@ class TestClassRegularExpressionReader:
         with pytest.raises(AttributeError) as e:
             A = RegularExpressionReader("ac.a+*a")
         assert e.value.args[0] == ERROR_MSG[1]
+        
 
     def test_sum_1(self):
         expr1 = [1, 0, 3]
